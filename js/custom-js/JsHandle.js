@@ -372,7 +372,10 @@ function add_node(_treeId, _text, _parent_node) {
         var ParentNodeId = _parent_node['nodeId'];
         for (var i = 0; i < ParentNodes.length; i++) {
             if (ParentNodeId === ParentNodes[i]['nodeId']) {
-                m_nodeIndex = ParentNodes[i]['nodes'].length;
+
+                if(ParentNodes[i]['nodes']!==undefined){
+                     m_nodeIndex = ParentNodes[i]['nodes'].length;
+                }              
                 $('#' + _treeId).treeview('addNode', [new_node,  ParentNodes[i], parseInt(m_nodeIndex), { silent: true }]);
                 break;
             }

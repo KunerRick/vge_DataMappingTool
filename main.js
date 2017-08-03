@@ -282,9 +282,9 @@ function createUdxDataWindow() {
 /*******************end udx data window */
 
 
-app.on('ready', createMappingWindow);
+//app.on('ready', createMappingWindow);
 //app.on('ready', createUdxSchemaWindow);
-//app.on('ready', createUdxDataWindow);
+app.on('ready', createUdxDataWindow);
 
 
 
