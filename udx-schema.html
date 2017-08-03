@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-16">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Schema Generater 1.0</title>
+
+  <link href="./css/bootstrap.min.css" rel="stylesheet" />
+  <link href="./css/bootstrap-treeview.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./fonts/font-awesome-4.7.0/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="./js/bootstrap-toastr/toastr.min.css" type="text/css">
+  <link rel="stylesheet" href="./css/custom-css/Custom-style.css" type="text/css">
+  <link rel="stylesheet" href="./css/page-css/udx-schema.css" type="text/css">
+  <link rel="stylesheet" href="./css/tabs.css" type="text/css">
+</head>
+
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+
+       <!-- <div class="col col-md-12" style="padding-left:0px;">
+        <ul class="nav nav-pills">
+          <li role="presentation"><a value="MAPPING" title="Use mapping methods" href="javascript:void(0);">Mapping</a></li>
+          <li role="presentation" class="active"><a value="SCHEMA" title="Edit UDX schema" href="javascript:void(0);">UDX Schema</a></li>
+          <li role="presentation"><a value="UDX" title="Edlt UDX data" href="javascript:void(0);">UDX Data</a></li>
+        </ul>
+        <br/>
+      </div>  -->
+
+      <div id="udx-schema-tree-view" class="panel panel-default col col-md-3 ">
+        <div id="udx-schema-tree-view-head" class="panel-heading">Udx Schema</div>
+        <div class="panel-body">
+          <div id="tree">
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col col-md-9">
+        <div class="basic-info">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Node Name</span>
+            <input id="node_name" type="text" class="form-control" placeholder="No node name to show" aria-describedby="basic-addon1">
+          </div>
+
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon2">Node Type</span>
+            <input id="node_type" type="text" disabled="true" class="form-control" placeholder="No node type to show" aria-describedby="basic-addon2">
+          </div>
+
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon3">Description</span>
+            <input id="node_description" type="text" class="form-control" placeholder="No node description to show" aria-describedby="basic-addon3">
+          </div>
+        </div>
+
+        <br/>
+        <div class="tabs">
+
+          <input checked id="tabbtn_1" name="tabs" class="tab-menu" type="radio">
+          <label title="Set node unit" for="tabbtn_1">Unit</label>
+
+          <input id="tabbtn_2" name="tabs" class="tab-menu" type="radio" value="Two">
+          <label title="Set node concept" for="tabbtn_2">Concept</label>
+
+          <input id="tabbtn_3" name="tabs" class="tab-menu" type="radio">
+          <label title="Set node spatial reference" for="tabbtn_3">Spatial Ref</label>
+
+          <input id="tabbtn_4" name="tabs" class="tab-menu" type="radio">
+          <label title="Set node data template" for="tabbtn_4">Data Template</label>
+
+          <span id="load-schema" title="Load UDX shcema form file" class="custom-btn custom-btn-blue">Load</span>
+          <span id="save-change" title="Update data to UDX schema dataset( Ctrl + S )." class="custom-btn custom-btn-red">Update</span>
+          <span id="show-view" title="Show current UDX schema content" class="custom-btn custom-btn-yellow" data-toggle="modal" data-target="#view_modal">Content</span>
+          <span id="save-file" title="Save UDX content to file" class="custom-btn custom-btn-green">Save</span>
+
+          <div class="m_panels">
+
+            <div class="m_panel">
+              <div class="form-group">
+                <label for="UnitsName">Unit Name</label>
+                <span id="set-unit" class="custom-btn custom-btn-blue" data-toggle="modal" data-target="#additional_desc_unit_modal">Set Units</span>
+                <span id="clear-unit" class="custom-btn custom-btn-red">Clear</span>
+                <input type="text" disabled class="form-control" id="UnitsName" placeholder="No units name to show">
+              </div>
+              <div class="form-group">
+                <label for="UnitsDescription">Unit Description</label>
+                <textarea disabled class="form-control" id="UnitsDescription" placeholder="NO units escription to show"></textarea>
+              </div>
+            </div>
+
+            <div class="m_panel">
+              <div class="form-group">
+                <label for="ConceptName">Concept Name</label>
+                <span id="set-concept" class="custom-btn custom-btn-blue" data-toggle="modal" data-target="#additional_desc_concept_modal">Set Concept</span>
+                <span id="clear-concept" class="custom-btn custom-btn-red">Clear</span>
+                <input type="text" disabled class="form-control" id="ConceptName" placeholder="No concept name to show">
+              </div>
+              <div class="form-group">
+                <label for="ConceptDescription">Concept Description</label>
+                <textarea disabled class="form-control" id="ConceptDescription" placeholder="No concept description to show"></textarea>
+              </div>
+
+            </div>
+
+            <div class="m_panel">
+              <div class="form-group">
+                <label for="SpatialRefName">Spatial Ref Name</label>
+                <span id="set-spatial-ref" class="custom-btn custom-btn-blue" data-toggle="modal" data-target="#additional_desc_spatialRef_modal">Set Spatial Ref</span>
+                <span id="clear-spatial-ref" class="custom-btn custom-btn-red">Clear</span>
+                <input type="text" disabled class="form-control" id="SpatialRefName" placeholder="No spatial reference name to show">
+              </div>
+              <div class="form-group">
+                <label for="SpatialRefType">Spatial Ref Type</label>
+                <textarea disabled class="form-control" id="SpatialRefType" placeholder="No spatial reference type to show"></textarea>
+              </div>
+
+            </div>
+
+            <div class="m_panel">
+              <div class="form-group">
+                <label for="DataTemplateName">Data Template Name</label>
+                <span id="set-data-template" class="custom-btn custom-btn-blue" data-toggle="modal" data-target="#additional_desc_template_modal">Set Data Template</span>
+                <span id="clear-data-template" class="custom-btn custom-btn-red">Clear</span>
+                <input type="text" disabled class="form-control" id="DataTemplateName" placeholder="No data template name to show">
+              </div>
+              <div class="form-group">
+                <label for="DataTemplateDescription">Data Template Type</label>
+                <textarea type="text" disabled class="form-control" id="DataTemplateDescription" placeholder="No data template description to show"></textarea>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <br/>
+      </div>
+
+    </div>
+
+
+    <ul id="contextMenu" class="dropdown-menu">
+      <!-- <li>
+      <a id="add-sib" href="javascript:void(0);">Add Sibling Node</a>
+    </li> -->
+      <li>
+        <a id="add-sub" href="javascript:void(0);" data-toggle="modal" data-target="#add_node_modal">Add Sub Node</a>
+      </li>
+      <li>
+        <a id="delete" href="javascript:void(0);">Delete</a>
+      </li>
+    </ul>
+    <a id="close-window" data-toggle="modal" data-target="#notification_modal" style="display:none"></a>
+    <!--begin Add_Node Modal -->
+    <div class="modal fade" id="add_node_modal" tabindex="-1" role="dialog" aria-labelledby="add_node_modalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="add_node_modalLabel">Add Schema Node</h4>
+          </div>
+          <div class="modal-body">
+
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">Node Name</span>
+              <input id="add_node_name" type="text" tabIndex="1" class="form-control" placeholder="Node Name" aria-describedby="basic-addon1">
+            </div>
+            <br/>
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Node Type</span>
+              <select id="add_ndoe_type" tabIndex="2" class="form-control">
+              <option title="Any type">EDTKT_NODE</option>
+              <option title="Integer">EDTKT_INT</option>
+              <option>EDTKT_REAL</option>
+              <option>EDTKT_STRING</option>
+              <option>EDTKT_VECTOR2</option>
+              <option>EDTKT_VECTOR3</option>
+              <option>EDTKT_VECTOR4</option>            
+              <option>EDTKT_INT_LIST</option>
+              <option>EDTKT_REAL_LIST</option>
+              <option>EDTKT_STRING_LIST</option>
+              <option>EDTKT_VECTOR2_LIST</option>
+              <option>EDTKT_VECTOR3_LIST</option>
+              <option>EDTKT_VECTOR4_LIST</option>
+              <option>EDTKT_LIST</option>
+              <option>EDTKT_MAP</option>
+              <option>EDTKT_TABLE</option>
+	        	</select>
+            </div>
+            <br/>
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon3">Description</span>
+              <input id="add_node_description" type="text" tabIndex="3" class="form-control" placeholder="Node Description" aria-describedby="basic-addon3">
+            </div>
+            <br/>
+          </div>
+          <div class="modal-footer">
+            <span class="custom-btn custom-btn-default" tabIndex="-1" data-dismiss="modal">Close</span>
+            <span id="add_node" class="custom-btn custom-btn-gray" tabIndex="4" data-dismiss="modal">Add</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end Add_Node Modal-->
+
+    <!--begin notification Modal -->
+    <div class="modal fade" id="notification_modal" tabindex="-1" role="dialog" aria-labelledby="notification_modalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="notification_modalLabel">Be sure to leave?</h4>
+          </div>
+          <div class="modal-body">
+            <h5>Please make sure that all the data has been saved into a file.Have you already done it?
+            </h5>
+          </div>
+          <div class="modal-footer">
+            <span class="custom-btn custom-btn-green" tabIndex="-1" data-dismiss="modal">Oh,I forgot</span>
+            <span id="continue-going" class="custom-btn custom-btn-gray" tabIndex="4" data-dismiss="modal">Sure</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end notification Modal-->
+
+    <!--begin show-view Modal -->
+    <div class="modal fade" id="view_modal" tabindex="-1" role="dialog" aria-labelledby="view_modalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" tabindex="-1" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="view_modalLabel">UDX Schema</h4>
+          </div>
+          <div class="modal-body">
+            <div>
+              <pre id="view-xml">
+               xml
+            </pre>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <span class="custom-btn custom-btn-default" data-dismiss="modal">Close</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end show-view Modal-->
+
+    <!--begin Additional description unit Modal -->
+    <div class="modal fade" id="additional_desc_unit_modal" tabindex="-1" role="dialog" aria-labelledby="additional_desc_unit_modalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" name="AdditionalClose" class="close" data-dismiss="modal" tabindex="-1" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="additional_desc_unit_modalLabel">Choose Unit</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row additional_desc_body">
+              <div class="col col-md-4 desc_tree_body">
+                <div id="unit_left_tree" class="desc_tree">
+
+                </div>
+              </div>
+              <div class="col col-md-7 desc_list_body">
+                <div id="unit_right_list">
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <nav id="page-nav" aria-label="Page navigation">
+
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end Additional description unit Modal -->
+
+    <!--begin Additional description concept Modal -->
+    <div class="modal fade" id="additional_desc_concept_modal" tabindex="-1" role="dialog" aria-labelledby="additional_desc_concept_modalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" name="AdditionalClose" class="close" data-dismiss="modal" tabindex="-1" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="additional_desc_concept_modalLabel">Choose Concept</h4>
+          </div>
+          <div class="modal-body">
+            <div id="additional_desc_body" class="row">
+              <div class="col col-md-4 desc_tree_body">
+                <div id="concept_left_tree" class="desc_tree">
+
+                </div>
+              </div>
+              <div class="col col-md-7 desc_list_body">
+                <div id="concept_right_list">
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <nav id="page-nav" aria-label="Page navigation">
+
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end Additional description concept Modal -->
+
+    <!--begin Additional description spatial ref Modal -->
+    <div class="modal fade" id="additional_desc_spatialRef_modal" tabindex="-1" role="dialog" aria-labelledby="additional_desc_spatialRef_modalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" name="AdditionalClose" class="close" data-dismiss="modal" tabindex="-1" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="additional_desc_spatialRef_modalLabel">Choose Spatial Ref</h4>
+          </div>
+          <div class="modal-body">
+            <div id="additional_desc_body" class="row">
+              <div class="col col-md-4 desc_tree_body">
+                <div id="spatialRef_left_tree" class="desc_tree">
+
+                </div>
+              </div>
+              <div class="col col-md-7 desc_list_body">
+                <div id="spatialRef_right_list">
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <nav id="page-nav" aria-label="Page navigation">
+
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end Additional description spatial ref Modal -->
+
+    <!--begin Additional description data template Modal -->
+    <div class="modal fade" id="additional_desc_template_modal" tabindex="-1" role="dialog" aria-labelledby="additional_desc_template_modalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" name="AdditionalClose" class="close" data-dismiss="modal" tabindex="-1" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="additional_desc_template_modalLabel">Choose Data Template</h4>
+          </div>
+          <div class="modal-body">
+            <div id="additional_desc_body" class="row">
+              <div class="col col-md-4 desc_tree_body">
+                <div id="desc_tree" class="desc_tree">
+
+                </div>
+              </div>
+              <div class="col col-md-7 desc_list_body">
+                <div id="desc_list">
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <nav id="page-nav" aria-label="Page navigation">
+
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end Additional description data template Modal -->
+
+    <script type="text/javascript" src="./js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./js/bootstrap-treeview.js"></script>
+    <script type="text/javascript" src="./js/bootstrap-toastr/toastr.js"></script>
+
+    <script type="text/javascript" src="./js/custom-js/contextMenu.js"></script>
+    <script type="text/javascript" src="./js/custom-js/JsHandle.js"></script>
+    <script type="text/javascript" src="./js/UDX.js"></script>
+    <script type="text/javascript" src="./js/custom-js/GSchema.js"></script>
+    <script type="text/javascript" src="./js/page-js/udx-schema.js"></script>
+    <script type="text/javascript" src="./js/custom-js/my-pagination.js"></script>
+    <script type="text/javascript" src="./js/tabs.js"></script>
+    <script type="text/javascript" src="./js/custom-js/key.min.js"></script>
+
+
+</body>
+
+</html>

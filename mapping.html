@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>DataMapping V 1.0</title>
+  <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="./fonts/font-awesome-4.7.0/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="./css/custom-css/Custom-style.css" type="text/css">
+  <link rel="stylesheet" href="./js/bootstrap-toastr/toastr.min.css" type="text/css">
+
+</head>
+
+<body>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col col-md-12" style="padding-left:0px;">
+        <ul class="nav nav-pills">
+          <li role="presentation" class="active"><a href="javascript:void(0);">Mapping</a></li>
+          <li role="presentation"><a href="./udx-schema.html">UDX Schema</a></li>
+          <li role="presentation"><a href="./udx-data.html">UDX Data</a></li>
+        </ul>
+        <br/>
+      </div>
+
+
+      <div id="method_list_panel" class=" panel panel-default col col-md-3">
+        <div class="panel-heading">Mapping Method</div>
+        <div id="method_list_body" class="panel-body">
+          <div id="method_list" class="list-group">
+            <!-- <a href="#" class="list-group-item active">Cras justo odio</a>
+          <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+          <a href="#" class="list-group-item">Morbi leo risus</a> -->
+          </div>
+        </div>
+      </div>
+
+      <div id="detail_area" class="col col-md-9">
+        <div class="panel panel-default">
+          <div id="MethodName" class="panel-heading">Main Info</div>
+          <div class="panel-body">
+            <div id="Maping_Method_Info" class="method-view">
+              <p><label for="name" class="label label-default">Name :</label>
+                <span name="name">Maping Service</span>
+              </p>
+              <p><label for="description" class="label label-default">Description :</label>
+                <span name="description">Description of Maping Service</span>
+              </p>
+              <p><label for="applicability" class="label label-default">Applicability :</label>
+                <span name="applicability">File Size <= 40 M </span>
+              </p>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="panel panel-default">
+          <div id="MethodName" class="panel-heading">Operation</div>
+          <div class="panel-body">
+            <div id="Maping_Method_Operation" class="method-view">
+              <span id="open_file" class="custom-btn custom-btn-blue" title="Load Mapping Method">Load</span>
+              <span class="custom-btn custom-btn-green" title="Format File To UDX" data-toggle="modal" data-target="#F2U_Modal">FFTU</span>
+              <span class="custom-btn custom-btn-yellow" title="UDX To Format File" data-toggle="modal" data-target="#U2F_Modal">UTFF</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel panel-default">
+          <div id="MethodName" class="panel-heading">Log</div>
+          <div id="log-area-body" class="panel-body">
+            <pre id="log-area">
+          </pre>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    
+    <a id="close-window" data-toggle="modal" data-target="#notification_modal" style="display:none"></a>
+    
+    <!--begin notification Modal -->
+    <div class="modal fade" id="notification_modal" tabindex="-1" role="dialog" aria-labelledby="notification_modalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="notification_modalLabel">Be sure to leave?</h4>
+          </div>
+          <div class="modal-body">
+            <h5>Please make sure that all the data has been saved into a file.Have you already done it?
+            </h5>
+          </div>
+          <div class="modal-footer">
+            <span class="custom-btn custom-btn-green" tabIndex="-1" data-dismiss="modal">Oh,I forgot</span>
+            <span id="continue-going" class="custom-btn custom-btn-gray" tabIndex="4" data-dismiss="modal">Sure</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end notification Modal-->
+
+    <!--begin F2U_Modal Modal -->
+    <div class="modal fade" id="F2U_Modal" tabindex="-1" role="dialog" aria-labelledby="F2U_ModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="F2U_ModalLabel">Format File To UDX</h4>
+          </div>
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label for="Input_File">Input Format File</label>
+              <div class="form-inline">
+                <input type="text" class="form-control" id="input-format-file" placeholder="Choose input File">
+                <span id="open-format-file" class="custom-btn custom-btn-default">Choose File</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="Output_File">Output UDX File</label>
+              <div class="form-inline">
+                <input type="text" class="form-control" id="output-udx-file" placeholder="Choose output folder">
+                <span id="save-udx-file" class="custom-btn custom-btn-default">Choose Folder</span>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <span class="custom-btn custom-btn-default" data-dismiss="modal">Close</span>
+            <span id="Run_F2U" class="custom-btn custom-btn-green" data-dismiss="modal">Run</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end F2U_Modal Modal -->
+
+    <!--begin U2F_Modal Modal -->
+    <div class="modal fade" id="U2F_Modal" tabindex="-1" role="dialog" aria-labelledby="U2F_ModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="F2U_ModalLabel">UDX To Format File</h4>
+          </div>
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label for="Input_File">Input UDX File</label>
+              <div class="form-inline">
+                <input type="text" class="form-control" id="input-udx-file" placeholder="Choose UDX">
+                <span id="open-udx-file" class="custom-btn custom-btn-default">Choose File</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="Output_File">Output Format File</label>
+              <div class="form-inline">
+                <input type="text" class="form-control" id="output-format-file" placeholder="Choose output folder">
+                <span id="save-format-file" class="custom-btn custom-btn-default">Choose Folder</span>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <span class="custom-btn custom-btn-default" data-dismiss="modal">Close</span>
+            <span id="Run_U2F" class="custom-btn custom-btn-green" data-dismiss="modal">Run</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end U2F_Modal Modal -->
+  </div>
+  <script type="text/javascript" src="./js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="./js/custom-js/my-list.js"></script>
+  <script type="text/javascript" src="./js/page-js/mapping.js"></script>
+  <script type="text/javascript" src="./js/bootstrap-toastr/toastr.js"></script>
+
+  <!-- <script type="text/javascript" src="./js/nxdat.schema.js"></script> -->
+
+</body>
+
+</html>
